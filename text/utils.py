@@ -1,7 +1,23 @@
 import re
 import nltk
 
-def sanitize_text(text, remove_stopwords):
+def sanitize_text(text: str, remove_stopwords: bool) -> str:
+    """ This utility function sanitizes a string by:
+    - removing links
+    - removing special characters
+    - removing numbers
+    - removing stopwords
+    - transforming in lowercase
+    - removing excessive whitespaces
+
+    Args:
+        text (str): the input text you want to clean
+        remove_stopwords (bool): whether or not to remove stopwords
+
+    Returns:
+        str: the cleaned text
+    """
+    
     # remove links
     text = re.sub(r'http\S+', '', text)
     # remove special chars and numbers
