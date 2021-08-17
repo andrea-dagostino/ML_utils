@@ -1,3 +1,5 @@
+import pandas as pd
+
 def create_date_features(dataframe):
     """This function extracts time-related features from a 'date' column
 
@@ -22,3 +24,30 @@ def create_date_features(dataframe):
     dataframe["quarter"] = dataframe.date.dt.quarter
 
     return dataframe
+
+
+def ts_to_date(ts:int) -> str:
+    """Utility function that converts a timestamp to a readable date.
+
+    Args:
+        ts (int): UNIX timestamp.
+
+    Returns:
+        str: the string-formatted date
+    """
+    date = datetime.datetime.fromtimestamp(ts).strftime("%Y-%m-%d")
+    return date
+
+
+def date_to_ts(date:str) -> int:
+    """Utility function that converts a string-formatted date to a UNIX timestamp.
+
+    Args:
+        date (str): the string-formatted date
+
+    Returns:
+        int: UNIX timestamp.
+    """
+
+    ts = int(time.mktime(datetime.datetime.strptime(date, "%Y-%m-%d").timetuple()))
+    return ts

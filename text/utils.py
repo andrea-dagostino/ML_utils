@@ -34,3 +34,11 @@ def sanitize_text(text: str, remove_stopwords: bool) -> str:
     text = text.lower().strip()
     
     return text
+
+def remove_punctuation(text):
+    punctuation_free = "".join([i for i in text if i not in string.punctuation])
+    return punctuation_free
+
+def remove_stopwords(text):
+    output = [i for i in text if i not in STOPWORDS]
+    return output
