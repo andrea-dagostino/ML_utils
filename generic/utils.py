@@ -51,3 +51,26 @@ def date_to_ts(date:str) -> int:
 
     ts = int(time.mktime(datetime.datetime.strptime(date, "%Y-%m-%d").timetuple()))
     return ts
+
+
+def balance_df(frame: pd.DataFrame, col: str, upsample_minority: bool) -> pd.DataFrame:
+    """Balances dataframe in case of class inbalance.
+
+    Args:
+        frame (pd.DataFrame): unbalanced dataframe
+        col (str): column to rebalance
+        upsample_minority (bool): Min / Max upsampling
+
+    Returns:
+        pd.DataFrame: balanced dataset
+    """
+    grouped = frame.groupby(col)
+    n_samp = {
+        True: grouped.size().max(),
+        False: grouped.size().min(),
+    }[upsample_minority]
+
+    fun = lambda x: x.sample(n_samp, replace=upsample_minority)
+    balanced = grouped.apply(fun)
+    balanced = balanced.reset_index(drop=True)
+    return balanced
